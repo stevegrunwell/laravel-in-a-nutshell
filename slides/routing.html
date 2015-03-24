@@ -1,0 +1,130 @@
+<section>
+  <h2>Routing</h2>
+
+  <pre><code class="php">Route::get('/', function()
+{
+    return 'Hello World';
+});</code></pre>
+
+</section>
+
+<section>
+  <h3>Based on HTTP verb&hellip;</h3>
+
+  <pre><code class="php">Route::post('foo/bar', function()
+{
+    return 'Hello World';
+});
+
+Route::put('foo/bar', function()
+{
+    //
+});
+
+Route::delete('foo/bar', function()
+{
+    //
+});</code></pre>
+
+</section>
+
+<section>
+  <h3>&hellip;or not.</h3>
+
+  <pre><code class="php">// Respond to GET or POST
+Route::match(['get', 'post'], '/', function()
+{
+    //
+});
+
+// Respond to any verb
+Route::any('foo', function()
+{
+    //
+});</code></pre>
+</section>
+
+<section>
+  <h3>Route parameters</h3>
+
+  <pre><code class="php">Route::get('user/{id}', function($id)
+{
+    return 'User ' . $id;
+});</code></pre>
+
+</section>
+
+<section>
+  <h3>Controller actions instead of closures</h3>
+
+  <pre><code class="php">Route::get('post/{id}', 'PostController@show' );</code></pre>
+  <pre class="fragment"><code class="php">class PostController extends Controller {
+
+  public function show($id) {
+
+    // Load the template at resources/views/post/show.blade.php
+    return view('post.show', ['post' => Post::findOrFail($id)]);
+  }
+
+}</code></pre>
+
+</section>
+
+<section>
+  <h3>RESTful controllers</h3>
+
+  <pre><code class="php">Route::resource('Post', 'PostController');</code></pre>
+
+  <table class="fragment">
+    <thead>
+      <tr>
+        <th>Verb</th>
+        <th>Route</th>
+        <th>PostController method</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GET</td>
+        <td>post</td>
+        <td><code>index()</code></td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>post/create</td>
+        <td><code>create()</code></td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>post</td>
+        <td><code>store()</code></td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>post/{$id}</td>
+        <td><code>show($id)</code></td>
+      </tr>
+      <tr>
+        <td>PUT/PATCH</td>
+        <td>post/{$id}</td>
+        <td><code>update($id)</code></td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td>post/{$id}</td>
+        <td><code>destroy($id)</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Middleware</h3>
+
+  <p>Previously called <strong>filters</strong>, enables us to do things like:</p>
+  <ul>
+    <li>Protect routes from unauthenticated users</li>
+    <li>Protect against <abbr title="Cross-Site Forgery Requests">CSFR</abbr></li>
+    <li>Log all incoming requests</li>
+  </ul>
+</section>

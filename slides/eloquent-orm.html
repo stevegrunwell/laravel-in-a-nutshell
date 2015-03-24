@@ -1,0 +1,82 @@
+<section>
+  <h2>Eloquent ORM</h2>
+
+  <p><em>ActiveRecord-style pattern for interfacing with models</em></p>
+
+  <pre><code class="php">$user = User::where('email', '=', 'user@example.com')->get();
+$user->name = 'John Doe'; // Set a public property
+$user->save(); // Save changes
+$user->delete(); // Destroy the model</code></pre>
+</section>
+
+<section>
+  <h3>Relationships</h3>
+
+  <pre><code class="php">class Company extends Eloquent {
+
+  public function locations()
+  {
+    return $this->hasMany('Location');
+  }
+
+}</code></pre>
+
+    <pre class="fragment"><code class="blade"><ul class="locations">
+  @foreach ($company->locations as $location)
+    <li>
+      {{ $location->address }}
+    </li>
+  @endforeach
+</ul></code></pre>
+
+</section>
+
+<section>
+  <h3>Relationship Queries</h3>
+
+  <pre class="fragment"><code class="php">// Get all posts with comments
+Post::has('comments')->get();</code></pre>
+
+  <pre class="fragment"><code class="php">// Filter posts by tag where ?tagName={slug}
+$tag = $request->get('tagName');
+Post::whereHas('tags', function ($query) use ($tag)
+{
+  $query->where('slug', '=', $tag);
+});</code></pre>
+</section>
+
+<section>
+  <h3>Accessors</h3>
+
+  <pre><code class="php">class User extends Eloquent {
+
+  public function getAvatar()
+  {
+    return sprintf(
+      'https://www.gravatar.com/avatar/%s'
+      md5( strtolower( $this->attributes['email'] ) )
+    );
+  }
+
+}
+
+<img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="avatar" /></code></pre>
+
+</section>
+
+<section>
+  <h3>Mutators</h3>
+
+  <pre><code class="php">class User extends Eloquent {
+
+  public function setEmail($value)
+  {
+    $this->attributes['email'] = strtolower($email);
+  }
+
+}
+
+$user->email = TEST@example.com;
+echo $user->email; // => test@example.com</code></pre>
+
+</section>
