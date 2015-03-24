@@ -1,0 +1,15 @@
+[
+    "index.md",
+    "what-is-laravel.html",
+    "laravel-philosophy.html",
+    "laravel-concepts.md",
+    "eloquent-orm.html",
+    "artisan.html",
+    "migrations.html",
+    "facades.md",
+    "templating-with-blade.html",
+    "routing.html",
+    "homestead.md",
+    "forge.md",
+    "resources.md"
+]

@@ -1,0 +1,115 @@
+<section>
+  <h2>Migrations</h2>
+
+  <p><em>Version-control your database schemas!</em></p>
+
+  <pre><code class="bash">$ php artisan migrate:make create_posts_table --create=posts</code></pre>
+
+  <p class="fragment">Once a migration has been committed, it should <strong>never</strong> be modified!</p>
+</section>
+
+<section>
+  <h3>Script the migration</h3>
+
+  <pre><code class="php">class CreatePostsTable extends Migration {
+
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up() {}
+
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down() {}
+}</code></pre>
+
+</section>
+
+<section>
+  <h3>What goes up()&hellip;</h3>
+  <pre><code class="php">public function up()
+{
+  Schema::create('posts', function(Blueprint $table)
+  {
+    $table->increments('id');
+    $table->string('title')->index();
+    $table->string('slug')->unique();
+    $table->longtext('content')->nullable()->index();
+    $table->timestamps();
+  });
+}</code></pre>
+</section>
+
+<section>
+  <h3>&hellip;must come down()</h3>
+
+  <pre><code class="php">public function down()
+{
+  Schema::drop('posts');
+}</code></pre>
+
+</section>
+
+<section>
+  <h3>Update Schemas + Foreign Keys</h3>
+
+  <pre><code class="php">public function up()
+{
+  Schema::table('posts', function($table)
+  {
+    $table->tinyInteger('user_id')->unsigned();
+
+    $table->foreign('user_id')->references('id')->on('users');
+  });
+}
+
+public function down()
+{
+  Schema::table('posts', function($table)
+  {
+    $table->dropForeign('posts_user_id_foreign');
+  });
+}</code></pre>
+
+</section>
+
+<section>
+  <h3>Run it!</h3>
+
+  <pre><code class="bash"># Runs all new migrations
+$ php artisan migrate
+
+# Roll-back the last migration group
+$ php artisan migrate:rollback
+
+# Rebuild the entire database
+$ php artisan migrate:reset</code></pre>
+
+  <p class="fragment">Laravel tracks which migrations have been run, so this is safe to run on every deployment</p>
+</section>
+
+<section>
+  <h3>Database seeds</h3>
+
+  <pre><code class="php">class PostTableSeeder extends Seeder {
+
+  public function run()
+  {
+    $post = [
+      'title'   => 'Hello World!',
+      'slug'    => 'hello-world',
+      'content' => 'This is your first post!'
+    ];
+    Post::create($post);
+  }
+
+}</code></pre>
+
+  <pre class="fragment"><code class="bash">$ php artisan db:seed</code></pre>
+
+</section>

@@ -1,0 +1,88 @@
+<section>
+  <h2>Templating with Blade</h2>
+
+  <ul>
+    <li>Clean, Handlebars-esque templating language for Laravel</li>
+    <li>Can be used interchangeably with <code>&lt;?php ?&gt;</code> tags</li>
+  </ul>
+</section>
+
+<section>
+  <h3>Basic example</h3>
+
+  <pre><code class="blade"><ul class="posts">
+@foreach ($posts as $post)
+  <li>
+    <a href="{{ $post->permalink }}">{{ $post->title }}</a>
+  </li>
+@endforeach
+</ul></code></pre>
+
+  <p class="fragment">In Laravel 5, <em>all</em> Blade output is escaped by default!</p>
+  <pre class="fragment"><code class="blade">{!! 'unescaped text' !!}</code></pre>
+
+</section>
+
+<section>
+  <h3>Layouts</h3>
+
+  <pre><code class="blade">&lt;html&gt;
+  &lt;body&gt;
+    @section('sidebar')
+      This is the master sidebar.
+    @show
+
+    <div class="container">
+      @yield('content')
+    </div>
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<pre class="fragment"><code class="blade">@extends('layouts.master')
+
+@section('sidebar')
+  @parent
+
+  <p>This is appended to the master sidebar.</p>
+@stop
+
+@section('content')
+  <p>This is my body content.</p>
+@stop</code></pre>
+
+</section>
+
+<section>
+  <h3>Partials</h3>
+
+  <pre><code class="blade"><header>
+  @include('modules.breaking-news')
+</header></code></pre>
+
+</section>
+
+<section>
+  <h3>Ternaries</h3>
+
+  <pre><code class="blade">// &lt;?php echo isset( $var ) ? $var : 'Default'; ?&gt;
+{{ $var or 'Default' }}</code></pre>
+
+</section>
+
+<section>
+  <h3>Forms</h3>
+
+  <pre><code class="blade">{!! Form::model($post, ['action' => 'PostsController@store']) !!}
+
+  <ul class="form-list">
+    <li>
+      {!! Form::label('title', 'Title', ['class' => 'required']) !!}
+      {!! Form::text('title') !!}
+    </li>
+  </ul>
+
+  <p class="form-submit">{{ Form::submit('Save') }}</p>
+
+{!! Form::close() !!}</code></pre>
+
+</section>
