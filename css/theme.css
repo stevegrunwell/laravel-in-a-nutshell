@@ -248,5 +248,8 @@ body {
 table {
   width: 100%; }
 
-th {
+th, dt {
   color: #13daec; }
+
+.reveal dd {
+  margin-bottom: 1em; }
