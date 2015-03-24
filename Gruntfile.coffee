@@ -1,4 +1,4 @@
-# Generated on 2015-02-02 using generator-reveal 0.4.0
+# Generated on 2015-03-24 using generator-reveal 0.4.0
 module.exports = (grunt) ->
 
     grunt.initConfig
@@ -90,6 +90,18 @@ module.exports = (grunt) ->
                 }]
 
         
+        buildcontrol:
+
+            options:
+                dir: 'dist'
+                commit: true
+                push: true
+                message: 'Built from %sourceCommit% on branch %sourceBranch%'
+            pages:
+                options:
+                    remote: 'git@github.com:stevegrunwell/A basic overview of Laravel 5.0 principles for developers new to the framework..git'
+                    branch: 'gh-pages'
+        
 
 
     # Load all grunt tasks.
@@ -133,6 +145,12 @@ module.exports = (grunt) ->
             'copy'
         ]
 
+    
+    grunt.registerTask 'deploy',
+        'Deploy to Github Pages', [
+            'dist'
+            'buildcontrol'
+        ]
     
 
     # Define default task.

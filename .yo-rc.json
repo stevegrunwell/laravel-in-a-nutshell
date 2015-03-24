@@ -3,6 +3,8 @@
     "presentationTitle": "Laravel in a Nutshell",
     "packageVersion": "0.1.0",
     "useSass": true,
-    "deployToGithubPages": false
+    "deployToGithubPages": true,
+    "githubUsername": "stevegrunwell",
+    "githubRepository": "A basic overview of Laravel 5.0 principles for developers new to the framework."
   }
 }
