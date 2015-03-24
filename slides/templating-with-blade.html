@@ -74,14 +74,13 @@
 
   <pre><code class="blade">{!! Form::model($post, ['action' => 'PostsController@store']) !!}
 
-  <ul class="form-list">
-    <li>
-      {!! Form::label('title', 'Title', ['class' => 'required']) !!}
-      {!! Form::text('title') !!}
-    </li>
-  </ul>
+  {!! Form::label('title', 'Title', ['class' => 'required']) !!}
+  {!! Form::text('title') !!}
 
-  <p class="form-submit">{{ Form::submit('Save') }}</p>
+  <p class="form-submit">
+    {!! Form::submit('Save') !!}
+    {!! Form::hidden('_token', csrf_token()) !!}
+  </p>
 
 {!! Form::close() !!}</code></pre>
 
